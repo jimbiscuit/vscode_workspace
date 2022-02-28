@@ -1,7 +1,6 @@
 .installed.cfg
 pip-selfcheck.json
 bin/
-src/
 lib/
 parts/
 var/
