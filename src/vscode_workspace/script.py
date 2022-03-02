@@ -3,16 +3,33 @@ import json
 import os
 
 
+IGNORE_FOLDER = ["parts", "build", "node_modules", "omelette", "var", "bin", "blobstorage", ]
+
+
+def recursive_folder(path, list_of_package=[]):
+    for folder in os.listdir(path):
+        print(os.path.join(path, folder))
+
+        if folder in IGNORE_FOLDER:
+            print("ignore")
+            continue
+        if not os.path.isdir(os.path.join(path, folder)):
+            print("not dir")
+            continue
+
+        if os.path.isdir(os.path.join(path, folder, ".git")):
+            list_of_package.append(os.path.join(path, folder))
+
+        recursive_folder(os.path.join(path, folder), list_of_package)
+
+    return list_of_package
+
+
 def main():
     # find path
 
     curr_path = os.path.realpath(os.path.curdir)
-    src = "src"
-    path = os.path.join(curr_path, src)
-    try:
-        list_of_package = os.listdir(path)
-    except OSError:
-        raise OSError("Could not find src folder")
+    path = os.path.join(curr_path)
 
     # get folder name
 
@@ -22,11 +39,9 @@ def main():
 
     dict_to_json = {"folders": [{"path": "."}], "settings": {}}
 
-    for package in list_of_package:
-        # check if folder is a python package
-        if not os.path.isfile(os.path.join(path, package, "setup.py")):
-            continue
-        dict_to_json["folders"].append({"path": "src/" + package})
+
+    for package in recursive_folder(path):
+        dict_to_json["folders"].append({"path": package})
 
     # dump to json
     with open(workspace + ".code-workspace", "w") as out_files:
