@@ -34,11 +34,12 @@ def main():
 
     # create dict
 
-    dict_to_json = {"folders": [{"path": "."}], "settings": {}}
+    dict_to_json = {
+        "folders": [{"path": package} for package in recursive_folder(path)],
+        "settings": {}
+    }
 
-
-    for package in recursive_folder(path):
-        dict_to_json["folders"].append({"path": package})
+    dict_to_json["folders"].append({"path": "."})
 
     # dump to json
     with open(workspace + ".code-workspace", "w") as out_files:
