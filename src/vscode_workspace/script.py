@@ -8,13 +8,10 @@ IGNORE_FOLDER = ["parts", "build", "node_modules", "omelette", "var", "bin", "bl
 
 def recursive_folder(path, list_of_package=[]):
     for folder in os.listdir(path):
-        print(os.path.join(path, folder))
 
         if folder in IGNORE_FOLDER:
-            print("ignore")
             continue
         if not os.path.isdir(os.path.join(path, folder)):
-            print("not dir")
             continue
 
         if os.path.isdir(os.path.join(path, folder, ".git")):
