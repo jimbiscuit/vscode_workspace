@@ -2,8 +2,15 @@
 import json
 import os
 
-
-IGNORE_FOLDER = ["parts", "build", "node_modules", "omelette", "var", "bin", "blobstorage", ]
+IGNORE_FOLDER = [
+    "parts",
+    "build",
+    "node_modules",
+    "omelette",
+    "var",
+    "bin",
+    "blobstorage",
+]
 
 
 def recursive_folder(path, list_of_package=[]):
@@ -36,7 +43,7 @@ def main():
 
     dict_to_json = {
         "folders": [{"path": package} for package in recursive_folder(path)],
-        "settings": {}
+        "settings": {},
     }
 
     dict_to_json["folders"].append({"path": "."})
@@ -44,6 +51,7 @@ def main():
     # dump to json
     with open(workspace + ".code-workspace", "w") as out_files:
         json.dump(dict_to_json, out_files)
+
 
 if __name__ == "__main__":
     main()

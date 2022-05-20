@@ -14,9 +14,5 @@ setuptools.setup(
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    entry_points={
-        "console_scripts": [
-            "vsc-init=vscode_workspace.script:main"
-        ]
-    }
+    entry_points={"console_scripts": ["vsc-init=vscode_workspace.script:main"]},
 )
