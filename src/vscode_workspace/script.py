@@ -10,6 +10,7 @@ IGNORE_FOLDER = [
     "var",
     "bin",
     "blobstorage",
+    ".git"
 ]
 
 
